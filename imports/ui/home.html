@@ -1,0 +1,16 @@
+<template name="home">
+  {{#if currentUser}}
+  <div class="wrap">
+    <form class="search-stu">
+      <div class="search">
+        <input type="text" class="searchTerm" name="student_id" placeholder="Enter your Student id here...">
+        <button type="submit" class="searchButton">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+  {{else}}
+  <h1>Please login to continue</h1>
+  {{/if}}
+</template>

@@ -1,0 +1,32 @@
+<template name="header">
+  <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item ">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        {{#if isInRole 'admin'}}
+        <li class="nav-item">
+          <a class="nav-link" href="{{pathFor route='addStudent'}}">Add / View Student Record</a>
+        </li>
+        {{/if}}
+      </ul>
+      {{#if currentUser}}
+      <span class="navbar-nav ">
+        <a class="nav-link logout" href="#">{{userEmail}}</a>
+      </span>
+      {{else}}
+      <span class="navbar-nav ">
+        <a class="nav-link " href="#" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Login
+        </a>
+      </span>
+      {{/if}}
+    </div>
+  </nav>
+  {{> login}}
+  {{> yield}}
+</template>

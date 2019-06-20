@@ -1,0 +1,154 @@
+<template name="viewStDetails">
+  {{#if currentUser}}
+  <div class="container2 pt-4">
+    {{#with student_details_table}}
+    <div class="form-row">
+      <div class=" col-md-8 text-right ">
+        <h4>Student Records</h4>
+      </div>
+      {{#if isInRole 'admin'}}
+      <div class="col-md-4 text-right">
+        <button type="button" class="btn btn-primary addStuBook"> Add book</button>
+        <button type="button" class="btn btn-success editStu"><i class="fa fa-pencil"
+            aria-hidden="true">Edit</i></button>
+      </div>
+      {{/if}}
+    </div>
+    <hr>
+    <form class="new-student" id="newstudent">
+      <div class="form-row">
+        <div class="form-group col-md-6 ">
+          <label for="student_Id" class="col-form-label">Student Id:</label>
+          <input type="text" class="form-control" id="student_Id" name="student_Id" value="{{profile.student_Id}}"
+            required readonly>
+        </div>
+        <div class="form-group col-md-6 ">
+          <label for="student_name" class="col-form-label">Student Name:</label>
+          <input type="text" class="form-control" id="student_name" name="student_name" value="{{profile.student_name}}"
+            required disabled>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12 ">
+          <label for="address" class="col-form-label">Address:</label>
+          <input type="text" class="form-control" id="address" name="address" value="{{profile.address}}" required
+            disabled>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6 ">
+          <label for="stu_email" class="col-form-label">Email:</label>
+          <input type="text" class="form-control" id="stu_email" name="email" value="{{userEmail}}" required disabled>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="phone" class="col-form-label">Phone:</label>
+          <input type="text" class="form-control" id="phone" name="phone" value="{{profile.phone}}" required disabled>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success update" style="display:none;">Update</button>
+    </form>
+    {{/with}}
+    <hr>
+    {{#each issue_book}}
+    <form class="payfine">
+      <div class="issued-book">
+        <h5 class="title">Issued book</h5>
+        <div class="form-row">
+          <div class="form-group col-md-6 ">
+            <label for="book_Id" class="col-form-label">Book Id:</label>
+            <input type="text" class="form-control" name="book_Id" value="{{book_Id}}" readonly="readonly" required>
+          </div>
+          {{#if calfine}}
+          <div class="form-group col-md-4">
+            <label for="fine" class="col-form-label">Fine(2 rs/day):</label>
+            <input type="text" class="form-control fine" name="fine" value="{{calfine}}" readonly><br>
+          </div>
+          {{/if}}
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="issue_date" class="col-form-label">Date of
+              Issue </label>
+            <input type='text' class="form-control" value="{{issue_date}}" name="issue_date" required disabled />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="expiry_date" class="col-form-label">Date of
+              Expiry :</label>
+            <input type="text" class="form-control" name="expiry_date" value="{{expiry_date}}" readonly required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6 ">
+            <label for="book_name" class="col-form-label">Book Name:</label>
+            <input type="text" class="form-control" name="book_name" value="{{book_name}}" required disabled>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="author_name" class="col-form-label">Author Name:</label>
+            <input type="text" class="form-control" name="author_name" value="{{author_name}}" required disabled>
+          </div>
+        </div>
+        {{#if isInRole 'admin'}}
+        <button type="button" class="btn btn-primary returnBook">Return book</button>
+        {{/if}}
+      </div>
+      <hr>
+    </form>
+    {{/each}}
+  </div>
+  {{/if}}
+  <!--Add book Modal -->
+  <div class="modal fade bd-example-modal-lg" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" id="add_book" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <form class="add-book">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Book</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-row">
+              <div class="form-group col-md-6 ">
+                <label for="book_Id" class="col-form-label">Book Id:</label>
+                <input type="text" class="form-control" name="book_Id" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6 ">
+                <label for="book_name" class="col-form-label">Book Name:</label>
+                <input type="text" class="form-control " id="book_name" name="book_name" pattern="[a-zA-Z0-9\s]+"
+                  required>
+
+              </div>
+              <div class="form-group col-md-6">
+                <label for="author_name" class="col-form-label">Author Name:</label>
+                <input type="text" class="form-control" id="author_name" name="author_name" pattern="[a-zA-Z\s]{3,}"
+                  title="Minimum 3 letters" required>
+
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="issue_date" class="col-form-label">Date of
+                  Issue </label>
+                <input type='text' class="form-control datepicker" id="issue_date" name="issue_date" required />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="expiry_date" class="col-form-label">Date of
+                  Expiry :</label>
+                <input type="text" class="form-control datepicker" id="expiry_date" name="expiry_date" readonly
+                  required>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary closes" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
